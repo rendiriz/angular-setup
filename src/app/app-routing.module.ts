@@ -1,10 +1,21 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [];
+// COMPONENT (PUBLIC)
+import { PageComponent as PublicPageComponent } from '@templates/public/container/page/page.component';
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+export const AppRoutingModule: Routes = [
+  {
+    path: '',
+    component: PublicPageComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./views/home/home.module').then((m) => m.HomeModule),
+      },
+      {
+        path: 'home',
+        loadChildren: () => import('./views/home/home.module').then((m) => m.HomeModule),
+      },
+    ],
+  },
+];
